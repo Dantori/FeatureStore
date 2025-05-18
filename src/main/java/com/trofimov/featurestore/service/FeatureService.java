@@ -5,6 +5,7 @@ import com.trofimov.featurestore.repository.FeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +41,7 @@ public class FeatureService {
                     existingFeature.setName(updatedFeature.getName());
                     existingFeature.setVersion(updatedFeature.getVersion());
                     existingFeature.setFeatureValue(updatedFeature.getFeatureValue());
-                    existingFeature.setCreatedAt(updatedFeature.getCreatedAt());
-                    existingFeature.setUpdatedAt(updatedFeature.getUpdatedAt());
+                    existingFeature.setUpdatedAt(LocalDateTime.now());
                     return featureRepository.save(existingFeature);
                 })
                 .orElseThrow(() -> new RuntimeException("Feature not found with id " + id));

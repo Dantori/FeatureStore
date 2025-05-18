@@ -1,10 +1,7 @@
 package com.trofimov.featurestore.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.time.LocalDateTime;
 
 public class FeatureDTO {
 
@@ -18,12 +15,6 @@ public class FeatureDTO {
 
     @NotBlank(message = "Feature value is required")
     private String featureValue;
-
-    @NotNull(message = "Creation date is required")
-    private LocalDateTime createdAt;
-
-    @NotNull(message = "Update date is required")
-    private LocalDateTime updatedAt;
 
     public String getName() {
         return name;
@@ -47,21 +38,5 @@ public class FeatureDTO {
 
     public void setFeatureValue(String featureValue) {
         this.featureValue = featureValue;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
