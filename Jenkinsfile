@@ -7,41 +7,37 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Клонируем проект из GitHub'
-                checkout scm
+            stage('Checkout') {
+                steps {
+                    checkout scm
+                }
+            }
+
+            stage('Build') {
+                steps {
+                    bat 'mvn clean package -DskipTests'
+                }
+            }
+
+            stage('Test') {
+                steps {
+                    bat 'mvn test'
+                }
+            }
+
+            stage('Archive Artifacts') {
+                steps {
+                    archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+                }
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Сборка Maven проекта'
-                sh 'mvn clean package'
+        post {
+            success {
+                echo '✅ Сборка завершена успешно!'
+            }
+            failure {
+                echo '❌ Сборка завершилась с ошибками!'
             }
         }
-
-        stage('Test') {
-            steps {
-                echo 'Запуск тестов'
-                sh 'mvn test'
-            }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                echo 'Архивирование артефактов'
-                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-            }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ Сборка завершена успешно!'
-        }
-        failure {
-            echo '❌ Сборка завершилась с ошибками!'
-        }
-    }
 }
